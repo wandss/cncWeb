@@ -1,6 +1,6 @@
 const path = require("path");
 
-module.export = {
+module.exports = {
   productionSourceMap: false,
   devServer: {
     proxy: 'http://0.0.0.0:8001'

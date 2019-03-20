@@ -18,9 +18,8 @@ class GcodeCreateAPIView(APIView):
     queryset = Gcode.objects.all()
 
     def post(self, request, filename, format=None):
-        import pdb; pdb.set_trace()  #DEBUG
         document = request.data['file']
-        gcode_file = Gcode.objets.create(gocode_file=document)
+        gcode_file = Gcode.objects.create(gcode_file=document)
         gcode_file.save()
         data = {'filename': filename, 'id': gcode_file.id}
         return Response(data=data, status=status.HTTP_201_CREATED)
