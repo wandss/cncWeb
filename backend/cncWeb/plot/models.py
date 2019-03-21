@@ -12,9 +12,9 @@ class Gcode(models.Model):
         return str(self.gcode_file.name)
 
 
-class RpiConfig(models.Model):
-
-    id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
-    motor_type = models.CharField(max_length=50)
-    create_date = models.DateTimeField(auto_now_add=True)
-    # TODO: add Pins number/name
+#class RpiConfig(models.Model):
+#
+#    id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
+#    motor_type = models.CharField(max_length=50)
+#    create_date = models.DateTimeField(auto_now_add=True)
+#    # TODO: add Pins number/name

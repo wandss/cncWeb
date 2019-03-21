@@ -1,7 +1,9 @@
-import os
+from os.path import join, abspath, dirname
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+here = lambda *dirs: join(abspath(dirname(__file__)), *dirs)
+BASE_DIR = here('..', '..')
+PROJECT_DIR = lambda *dirs: join(abspath(BASE_DIR), *dirs)
 
 # Application definition
 
@@ -14,6 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'plot',
+    'motor',
+    'rpi',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +56,8 @@ WSGI_APPLICATION = 'cncWeb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': PROJECT_DIR('db.sqlite3'),
     }
 }
 
