@@ -1,7 +1,7 @@
 from uuid import uuid4
 from django.db import models
 
-#ADD PIN NUMBERS MODEL
+
 class RpiBoard(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50, unique=True)
@@ -12,3 +12,12 @@ class RpiBoard(models.Model):
 
     class Meta:
         ordering = ('name', )
+
+
+class RpiPinOut(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    board = models.ForeignKey(RpiBoard, on_delete=models.CASCADE)
+    number = models.PositiveIntegerField(unique=True,
+                                         choices=[(i, i) for i in range(1, 41)]
+                                         )
+    function = models.CharField(max_length=20)
