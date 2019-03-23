@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Motor, MotorType
 
-# Register your models here.
+admin.site.register(Motor)
+admin.site.register(MotorType)

@@ -1,5 +1,7 @@
 from uuid import uuid4
 from django.db import models
+from motor.models import Motor
+from rpi.models import RpiBoard
 
 
 class Gcode(models.Model):
@@ -12,9 +14,12 @@ class Gcode(models.Model):
         return str(self.gcode_file.name)
 
 
-#class RpiConfig(models.Model):
-#
-#    id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
-#    motor_type = models.CharField(max_length=50)
-#    create_date = models.DateTimeField(auto_now_add=True)
-#    # TODO: add Pins number/name
+class Settings(models.Model):
+
+    id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
+    project_name = models.CharField(max_length=30)
+    motor = models.ManyToManyField(Motor)
+    pi_board = models.ForeignKey(RpiBoard, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.project_name
