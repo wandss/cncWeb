@@ -23,3 +23,11 @@ class Settings(models.Model):
 
     def __str__(self):
         return self.project_name
+
+"""
+TODO:
+    Change associations.
+    A board has motors connected to its pins.
+    The the project will be associated with board only
+    Remove motor attribute from plot.models.Settings
+"""
