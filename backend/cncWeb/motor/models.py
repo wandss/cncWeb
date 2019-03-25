@@ -1,10 +1,10 @@
 from uuid import uuid4
 from django.db import models
 
-# CREATE MOTOR TYPE OPTIONS OR CREATE CLASS
+
 class MotorType(models.Model):
     id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
