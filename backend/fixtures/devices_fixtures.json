@@ -1,0 +1,1 @@
+[{"model": "device.device", "pk": "652dd7cf-7cec-4630-b90c-15da0180a71e", "fields": {"name": "Stepper", "isActive": false, "create_date": "2019-03-25T23:29:34.514Z"}}, {"model": "device.device", "pk": "7a6a9486-c0f8-4aa0-a0b2-750bb2a8c9c6", "fields": {"name": "Servo", "isActive": false, "create_date": "2019-03-25T23:29:42.240Z"}}]

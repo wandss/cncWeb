@@ -1,6 +1,7 @@
 from uuid import uuid4
 from django.db import models
-from motor.models import Motor
+from device.models import Device
+
 
 class RpiPinOut(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
@@ -23,7 +24,7 @@ class RpiBoard(models.Model):
     name = models.CharField(max_length=50, unique=True)
     create_date = models.DateTimeField(auto_now_add=True)
     available_pins = models.ManyToManyField(RpiPinOut)
-    connected_devices = models.ManyToManyField(Motor, through="Devices")
+    connected_devices = models.ManyToManyField(Device, through="Connection")
 
     def __str__(self):
         return self.name
@@ -32,8 +33,16 @@ class RpiBoard(models.Model):
         ordering = ('name', )
 
 
-class Devices(models.Model):
+class Connection(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     board = models.ForeignKey(RpiBoard, on_delete=models.CASCADE)
-    device = models.ForeignKey(Motor, on_delete=models.CASCADE)
-    used_pins = models.CharField(max_length=12, blank=True, null=True)
+    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    used_pins = models.CharField(max_length=50)
+
+    def __str__(self):
+        return "{} - {}".format(self.board, self.device)
+
+    class Meta:
+        unique_together = ('device', 'used_pins')
+
+# TODO: REVIEW MODELS
