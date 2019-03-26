@@ -1,5 +1,5 @@
 <template>
-  <div class="container home">
+  <div class="container">
     <div class="form-group">
       <h3>Hello!!!</h3>
       <p>This app controls a Mini CNC Ploting  machine, made with two DVD Drives.</p>
@@ -7,6 +7,10 @@
       <plot :show="showPlot" @click="showPlot=!showPlot"/>
       <base-btn @click="showPlot=!showPlot">
         Plot
+      </base-btn>
+      <base-btn @click="$router.push({name: 'machines'})"
+        cssClass="btn btn-secondary" >
+        My Machines
       </base-btn>
     </div>
   </div>
@@ -26,7 +30,7 @@ export default {
 }
 </script>
 <style scoped>
-.home{
+.container{
   margin-top:2rem;
 }
 </style>
