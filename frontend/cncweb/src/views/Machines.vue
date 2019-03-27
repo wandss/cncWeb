@@ -1,7 +1,17 @@
 <template>
   <div class="container">
     <div class="row mb-4">
-      <div class="col-4">
+      <div class="col">
+        <div v-for="(form, index) in form.data" :key="index">
+          <div v-for="(value, key) in form" :key="key">
+            {{key}} - {{value}}
+            <base-input :label="value.label+':'" type="text"
+             v-model="value.value" :limit="value.max_length"
+             @input="test(key, value.value)"
+            />
+
+          </div>
+        </div>
         <card v-for="machine in machines" :header="machine.name"
           cssClass="dark"
           :show="machines.length > 0" :key="machine.name" :hasFooter="true">
@@ -42,6 +52,7 @@
 import Card from '@/components/card.vue'
 import BaseBtn from '@/components/baseButton.vue'
 import BaseInput from '@/components/baseInput.vue'
+import Form from '@/utils/forms.js'
 export default {
   name: 'Machines',
   components: {BaseBtn, Card, BaseInput},
@@ -50,37 +61,43 @@ export default {
       machines: [],
       fields: [],
       isEditing: false,
+      form: new Form(),
     }
   },
-  created(){
+  mounted(){
     this.getMachines()
-    this.getMachineFields()
   },
   methods: {
     getMachines(){
       this.$http.get(this.$urls.plot.list)
         .then(resp=>{
           this.machines = resp.data.results
+          this.getMachineFields()
         })
         .catch(error=>{
           console.log(error.response)
         })
     },
     getMachineFields(){
-      //TODO: Create method to populate fields
-      // add a value key to fields object and get this values
-      // from macines
       this.$http.options(this.$urls.plot.list)
         .then(resp=>{
-          console.log(resp.data)
           this.fields = resp.data.actions.POST
-          Object.keys(this.fields).forEach(name=>
-            this.machines.forEach(machine=>console.log(machine[name])))
+          this.form.metadata = resp.data.actions.POST
+          this.form.formData = this.machines.concat()
+          this.form.fillForm()
         })
         .catch(error=>{
           console.log(error.response)
         })
     },
+    test(key, value){
+      // Fix: The $set is add the object key to the object
+      // teste: {value: 'Something'}
+      // after $set => teste: {value: 'New Value', teste: 'New Value'}
+      const index = Object.keys(this.form.metadata).indexOf(key)
+      console.log(index)
+      this.$set(this.form.data[index][key], key, value)
+    }
   }
 }
 </script>
