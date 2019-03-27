@@ -10,6 +10,8 @@
               {{key}} : {{value}}
               <div v-if="value.required && value.type==='string'">
                 <base-input type="text" :label="value.label"
+                  v-model="value.value"
+                  :limit="value.max_length"
                 />
               </div>
             </div>
@@ -72,6 +74,8 @@ export default {
         .then(resp=>{
           console.log(resp.data)
           this.fields = resp.data.actions.POST
+          Object.keys(this.fields).forEach(name=>
+            this.machines.forEach(machine=>console.log(machine[name])))
         })
         .catch(error=>{
           console.log(error.response)

@@ -10,8 +10,8 @@ export default{
   name:'BaseButton',
   props:{
     cssClass:{
-      type:String,
-      default:'btn-primary',
+      type: String,
+      default: 'btn-primary',
     },
     icon:{
       type:String,
